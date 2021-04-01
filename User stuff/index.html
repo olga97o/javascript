@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User stuff</title>
+</head>
+<body>
+<script>
+    class Entity {
+        constructor(name) {
+            this.name = name;
+        }
+        draw = (name) => console.log(`You have ${this.name}!`);
+    }
+
+    class Stuff extends Entity {
+        constructor(name) {
+            super(name);
+        }
+        draw = () => console.log(`You have ${this.name}!`);
+    }
+
+    class Box extends Entity{
+        constructor(name, stuffs) {
+            super(name);
+            this.stuffs = stuffs;
+        }
+        draw = () => console.log(`Your box is ${this.name} and you have ${this.stuffs}!`);
+    }
+
+    class User extends Entity {
+        constructor(name, boxes) {
+            super(name);
+            this.boxes = boxes;
+        }
+        draw = () => console.log(`Hello, ${this.name}, you have ${this.boxes}!`);
+    }
+
+    let stuff1 = new Stuff(`stuff 1`);
+    let stuff2 = new Stuff(`stuff 2`);
+    let stuff3 = new Stuff(`stuff 3`);
+
+    let box1 = new Box(`box 1`, [stuff1, stuff3]);
+    let box2 = new Box(`box 2`, [stuff2, stuff3]);
+    let box3 = new Box(`box 3`, [stuff1, stuff2]);
+
+    let user1 = new User(`Olga`, [box1, box2]);
+    let user2 = new User(`Mike`, [box3]);
+    let user3 = new User(`Peter`, [box2, box3]);
+
+    const users = [user1, user2, user3];
+
+</script>
+</body>
+</html>
