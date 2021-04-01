@@ -5,27 +5,43 @@
     <title>User stuff</title>
 </head>
 <body>
+<table border=1 id="table"></table>
 <script>
+    let table = document.getElementById('table');
+    let tr = document.createElement('tr');
+
     class Entity {
         constructor(name) {
             this.name = name;
         }
-        draw = (name) => console.log(`You have ${this.name}!`);
+
+        draw = () => {
+            table.appendChild(tr);
+            tr.innerText = this.name;
+        }
     }
 
     class Stuff extends Entity {
         constructor(name) {
             super(name);
         }
-        draw = () => console.log(`You have ${this.name}!`);
+
+        draw = () => {
+            table.appendChild(tr);
+            tr.innerText = this.name;
+        }
     }
 
-    class Box extends Entity{
+    class Box extends Entity {
         constructor(name, stuffs) {
             super(name);
             this.stuffs = stuffs;
         }
-        draw = () => console.log(`Your box is ${this.name} and you have ${this.stuffs}!`);
+
+        draw = () => {
+            table.appendChild(tr);
+            tr.innerText = this.name + ' ';
+        }
     }
 
     class User extends Entity {
@@ -33,7 +49,18 @@
             super(name);
             this.boxes = boxes;
         }
-        draw = () => console.log(`Hello, ${this.name}, you have ${this.boxes}!`);
+
+        draw = () => {
+            let tr = document.createElement('tr');
+            table.appendChild(tr);
+            tr.innerText = this.name + ' ';
+            for (let i = 0; i < this.boxes.length; i++) {
+                tr.innerText += ' ' + this.boxes[i].name + ' ';
+                for (let j = 0; j < this.boxes[i].stuffs.length; j++) {
+                    tr.innerText += ' ' + this.boxes[i].stuffs[j].name + ' ';
+                }
+            }
+        }
     }
 
     let stuff1 = new Stuff(`stuff 1`);
@@ -48,7 +75,9 @@
     let user2 = new User(`Mike`, [box3]);
     let user3 = new User(`Peter`, [box2, box3]);
 
-    const users = [user1, user2, user3];
+    user1.draw();
+    user2.draw();
+    user3.draw();
 
 </script>
 </body>
