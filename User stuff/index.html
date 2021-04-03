@@ -4,20 +4,31 @@
     <meta charset="UTF-8">
     <title>User stuff</title>
 </head>
+<style>
+    div {
+        border: 1px solid black;
+        margin: 5px;
+        text-align: center;
+    }
+
+    #div_parent {
+        width: 100px;
+    }
+</style>
 <body>
-<table border=1 id="table"></table>
+<div id="div_parent"></div>
 <script>
-    let table = document.getElementById('table');
-    let tr = document.createElement('tr');
+    let div_parent = document.getElementById('div_parent');
 
     class Entity {
         constructor(name) {
             this.name = name;
         }
 
-        draw = () => {
-            table.appendChild(tr);
-            tr.innerText = this.name;
+        draw = (parent) => {
+            let div = document.createElement('div');
+            div.innerText = this.name;
+            parent.appendChild(div);
         }
     }
 
@@ -26,9 +37,10 @@
             super(name);
         }
 
-        draw = () => {
-            table.appendChild(tr);
-            tr.innerText = this.name;
+        draw = (parent) => {
+            let div = document.createElement('div');
+            div.innerText = this.name;
+            parent.appendChild(div);
         }
     }
 
@@ -38,9 +50,11 @@
             this.stuffs = stuffs;
         }
 
-        draw = () => {
-            table.appendChild(tr);
-            tr.innerText = this.name + ' ';
+        draw = (parent) => {
+            let div = document.createElement('div');
+            div.innerText = this.name;
+            this.stuffs.forEach(stuff => stuff.draw(div));
+            parent.appendChild(div);
         }
     }
 
@@ -50,16 +64,11 @@
             this.boxes = boxes;
         }
 
-        draw = () => {
-            let tr = document.createElement('tr');
-            table.appendChild(tr);
-            tr.innerText = this.name + ' ';
-            for (let i = 0; i < this.boxes.length; i++) {
-                tr.innerText += ' ' + this.boxes[i].name + ' ';
-                for (let j = 0; j < this.boxes[i].stuffs.length; j++) {
-                    tr.innerText += ' ' + this.boxes[i].stuffs[j].name + ' ';
-                }
-            }
+        draw = (parent) => {
+            let div = document.createElement('div');
+            div.innerText = this.name;
+            this.boxes.forEach(box => box.draw(div))
+            parent.appendChild(div);
         }
     }
 
@@ -75,9 +84,9 @@
     let user2 = new User(`Mike`, [box3]);
     let user3 = new User(`Peter`, [box2, box3]);
 
-    user1.draw();
-    user2.draw();
-    user3.draw();
+    let users = [user1, user2, user3];
+
+    users.forEach(user => user.draw(div_parent));
 
 </script>
 </body>
