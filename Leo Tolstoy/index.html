@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leo Tolstoy</title>
+</head>
+<body>
+<script>
+    const numbers = [47, 46, 48, 31, 63, 47, 36, 48, 36, 49, 50, 31, 50, 59, 63, 38, 35, 31, 50, 59, 63, 45, 36, 46, 38, 40, 35, 31, 45, 45, 58, 53, 63, 47, 46, 35, 31, 48, 42, 46, 33, 63, 46, 50, 63, 38, 40, 39, 45, 40, 63, 31, 63, 49, 31, 44, 46, 44, 51, 63, 35, 36, 43, 31, 50, 59, 63, 38, 40, 39, 45, 59];
+
+    const letters = ['о', 'е', 'а', 'и', 'н', 'т', 'с', 'р', 'в', 'л', 'к', 'м', 'д', 'п', 'у', 'я', 'ы', 'ь', 'г', 'з', 'б'].values();
+
+    /*const uniqueArr = [...new Set(numbers)];
+    console.log(uniqueArr);
+
+    const countArr = new Map();
+
+    uniqueArr.forEach(u =>
+        countArr.set(u, numbers.filter(a =>
+            a === u).length));
+    console.log(countArr);*/
+
+    const counts = numbers.reduce((map, val) => {
+        map[val] = map[val] ? map[val] + 1 : 1;
+        return map;
+    }, {});
+
+    const sorted = Object.entries(counts).
+    sort((min, max) => max[1] - min[1]).
+    reduce((obj, val) => {
+        obj[val[0]] = letters.next().value;
+        return obj;
+    }, {});
+
+    console.log(sorted);
+
+    const text = numbers.map(num => sorted[num]).join('');
+
+    console.log(text)
+
+    //в д и в о е
+
+
+</script>
+</body>
+</html>
