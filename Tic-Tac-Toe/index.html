@@ -92,37 +92,40 @@
             for (let j = 0; j < size; j++) {
                 let cellClassName = square[i][j].className;
 
-                if (i === size - 1 || j === size - 1) {
+                if (cellClassName) {
 
-                    switch (cellClassName) {
-                        case square[i][j - 1].className:
-                            colCounter++;
-                            break;
-                        case square[i - 1][j].className:
-                            rowCounter++;
-                            break;
-                        case square[i - 1][j - 1].className:
-                            diagCounter++;
-                            break;
+                    if (i === size - 1 || j === size - 1) {
+
+                        switch (cellClassName) {
+                            case square[i][j - 1].className:
+                                colCounter++;
+                                break;
+                            case square[i - 1][j].className:
+                                rowCounter++;
+                                break;
+                            case square[i - 1][j - 1].className:
+                                diagCounter++;
+                                break;
+                        }
+                    } else {
+
+                        switch (cellClassName) {
+                            case square[i][j + 1].className:
+                                colCounter++;
+                                break;
+                            case square[i + 1][j].className:
+                                rowCounter++;
+                                break;
+                            case square[i + 1][j + 1].className:
+                                diagCounter++;
+                                break;
+                        }
+
                     }
-                } else {
-
-                    switch (cellClassName) {
-                        case square[i][j + 1].className:
-                            colCounter++;
-                            break;
-                        case square[i + 1][j].className:
-                            rowCounter++;
-                            break;
-                        case square[i + 1][j + 1].className:
-                            diagCounter++;
-                            break;
-                    }
-
                 }
 
             }
-            if (colCounter === 3 || rowCounter === 3 ||diagCounter === 3) {
+            if (colCounter === 3 || rowCounter === 3 || diagCounter === 3) {
                 return true;
             }
         }
