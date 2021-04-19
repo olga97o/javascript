@@ -38,21 +38,21 @@
 
 <script>
     const parent = document.getElementById("body");
+    let count = 0;
 
     function createCell(size) {
         const div = document.createElement("div");
         div.style.border = "1px black solid";
         let divThis = createTicTac.bind(div);
-        let count = 0;
+
         div.addEventListener('click', () => {
             count++;
             divThis();
 
-            //countCells(size);
             if (countCells(size)) {
                 searchWinner(count, size)
             }
-        })
+        }, {once: true})
         parent.append(div);
         return div;
     }
@@ -85,40 +85,36 @@
     }
 
     function countCells(size) {
-        let rowCounter = 0;
-        let colCounter = 0;
-        let mainDiagCounter = 0;
-        let sideDiagCounter = 0;
+        let ticRowCounter = 0;
+        let ticColCounter = 0;
+        let ticMainDiagCounter = 0;
+        let ticSideDiagCounter = 0;
+        let tacRowCounter = 0;
+        let tacColCounter = 0;
+        let tacMainDiagCounter = 0;
+        let tacSideDiagCounter = 0;
         for (let i = 0; i < size - 1; i++) {
             for (let j = 0; j < size; j++) {
 
-                if (!!square[i][j].className) {
-
-                    switch (square[i][j].className) {
-                        case square[i + 1][j].className:
-                            rowCounter++;
-                            break;
-                        case square[i + 1][i + 1].className:
-                            mainDiagCounter++;
-                            break;
-
-                    }
-                }
-                if (!!square[j][i].className) {
-
-                    switch (square[j][i].className) {
-                        case square[j][i + 1].className:
-                            colCounter++;
-                            break;
-                        case square[j - 1][i + 1].className:
-                            sideDiagCounter++;
-                            break;
-                    }
-
+                if (!!square[i][j].className && square[i][j].className === square[i + 1][j].className) {
+                    square[i][j].className === 'tic' ? ticRowCounter++ : tacRowCounter++;
                 }
 
+                if (!!square[j][i].className && square[j][i].className === square[j][i + 1].className){
+                    square[j][i].className === 'tic' ? ticColCounter++ : tacColCounter++;
+                }
             }
-            if (colCounter === size - 1 || rowCounter === size - 1 || mainDiagCounter === size - 1 || sideDiagCounter === size - 1) {
+
+            if (!!square[i][i].className && square[i][i].className === square[i + 1][i + 1].className) {
+                square[i][i].className === 'tic' ? ticMainDiagCounter++ : tacMainDiagCounter++;
+            }
+
+            if (!!square[i][size - 1 - i].className && square[i][size - 1 - i].className === square[i + 1][size - 1 - (i + 1)].className) {
+                square[i][size - 1 - i].className === 'tic' ? ticSideDiagCounter++ : tacSideDiagCounter++;
+            }
+
+            if (ticColCounter === size - 1 || ticRowCounter === size - 1 || ticMainDiagCounter === size - 1 || ticSideDiagCounter === size - 1 ||
+                tacColCounter === size - 1 || tacRowCounter === size - 1 || tacMainDiagCounter === size - 1 || tacSideDiagCounter === size - 1) {
                 return true;
             }
         }
@@ -126,13 +122,16 @@
     }
 
     function searchWinner(count, size) {
+        //let divs = document.get
         const p = document.createElement("p");
         const gamer = count % 2 === 0 ? "2st" : "1st";
         if (count === size * size) {
+            parent.innerHTML = '';
             p.innerText = 'Draw!';
             parent.append(p);
-            return p;
+            return parent;
         } else {
+            parent.innerHTML = '';
             p.innerText = `${gamer} win!`;
             parent.append(p);
             return p;
