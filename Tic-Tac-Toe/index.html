@@ -87,45 +87,38 @@
     function countCells(size) {
         let rowCounter = 0;
         let colCounter = 0;
-        let diagCounter = 0;
-        for (let i = 0; i < size; i++) {
+        let mainDiagCounter = 0;
+        let sideDiagCounter = 0;
+        for (let i = 0; i < size - 1; i++) {
             for (let j = 0; j < size; j++) {
-                let cellClassName = square[i][j].className;
 
-                if (cellClassName) {
+                if (!!square[i][j].className) {
 
-                    if (i === size - 1 || j === size - 1) {
-
-                        switch (cellClassName) {
-                            case square[i][j - 1].className:
-                                colCounter++;
-                                break;
-                            case square[i - 1][j].className:
-                                rowCounter++;
-                                break;
-                            case square[i - 1][j - 1].className:
-                                diagCounter++;
-                                break;
-                        }
-                    } else {
-
-                        switch (cellClassName) {
-                            case square[i][j + 1].className:
-                                colCounter++;
-                                break;
-                            case square[i + 1][j].className:
-                                rowCounter++;
-                                break;
-                            case square[i + 1][j + 1].className:
-                                diagCounter++;
-                                break;
-                        }
+                    switch (square[i][j].className) {
+                        case square[i + 1][j].className:
+                            rowCounter++;
+                            break;
+                        case square[i + 1][i + 1].className:
+                            mainDiagCounter++;
+                            break;
 
                     }
                 }
+                if (!!square[j][i].className) {
+
+                    switch (square[j][i].className) {
+                        case square[j][i + 1].className:
+                            colCounter++;
+                            break;
+                        case square[j - 1][i + 1].className:
+                            sideDiagCounter++;
+                            break;
+                    }
+
+                }
 
             }
-            if (colCounter === 3 || rowCounter === 3 || diagCounter === 3) {
+            if (colCounter === size - 1 || rowCounter === size - 1 || mainDiagCounter === size - 1 || sideDiagCounter === size - 1) {
                 return true;
             }
         }
