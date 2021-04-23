@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table</title>
+    <style>
+        table {
+            border: 1px solid black;
+        }
+
+        td {
+            border-collapse: collapse;
+            padding: 5px;
+            width: content-box;
+            height: 50px;
+            text-align: center;
+            border: 1px solid black;
+        }
+
+        input {
+            padding: 5px;
+            width: 60px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    const arr = [
+        {
+            FirstName: "Sergey",
+            LastName: "Sergeev"
+        },
+        {
+            FirstName: "Ivan",
+            LastName: "Ivanov"
+        },
+        {
+            FirstName: "Andrey",
+            LastName: "Andreev"
+        },
+        {
+            FirstName: "Petr",
+            LastName: "Petrov"
+        }
+    ];
+
+    const body = document.getElementsByTagName("body")[0]
+    const table = document.createElement("table");
+    const thead = document.createElement("thead");
+    const tbody = document.createElement("tbody");
+
+    body.append(table);
+    table.append(thead);
+    table.append(tbody);
+
+    function drawRow(parent, object, mapper) {
+        const tr = document.createElement("tr");
+        mapper(object).forEach(data => {
+            const td = document.createElement("td");
+            td.innerText = data;
+            tr.append(td);
+        })
+        parent.append(tr);
+    }
+
+    function drawThead(objects) {
+        drawRow(thead, objects[0], Object.keys);
+        thead.addEventListener('click', e => {
+            if (e.target && e.target.matches("td")) {
+                const target = e.target;
+                const value = target.innerText;
+                objects.sort((a, b) => {
+                    if (a[value] > b[value]) {
+                        return 1;
+                    } else if (a[value] < b[value]) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                })
+                tbody.innerText = '';
+                drawTbody(objects);
+            }
+        });
+    }
+
+    function drawTbody(objects) {
+        objects.forEach(object => {
+            drawRow(tbody, object, Object.values);
+        })
+        tbody.addEventListener('click', e => {
+            if (e.target && e.target.matches("td")) {
+                const target = e.target;
+                const input = document.createElement("input");
+                input.value = target.innerText;
+                target.innerText = '';
+                target.append(input);
+            }
+        });
+
+        tbody.addEventListener('focusout', e => {
+            if (e.target && e.target.matches("input")) {
+                e.preventDefault();
+                const target = e.target;
+                target.parentNode.innerText = target.value;
+            }
+        })
+    }
+
+    drawThead(arr);
+    drawTbody(arr);
+
+
+</script>
+</body>
+</html>
