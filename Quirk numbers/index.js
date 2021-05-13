@@ -4,34 +4,34 @@ const str = "1 2 + 3 x 4 +";
 
 const stack = [];
 
-function sum(a, b) {
+function sum(arr) {
     return new Promise((resolve) => {
         setTimeout(() => {
-            resolve(+a + +b);
+            resolve(+arr[0] + +arr[1]);
         }, delay)
     });
 }
 
-function sub(a, b) {
+function sub(arr) {
     return new Promise((resolve) => {
         setTimeout(() => {
-            resolve(a - b);
+            resolve(arr[0] - arr[1]);
         }, delay)
     });
 }
 
-function multi(a, b) {
+function multi(arr) {
     return new Promise((resolve) => {
         setTimeout(() => {
-            resolve(a * b);
+            resolve(arr[0] * arr[1]);
         }, delay)
     });
 }
 
-function split(a, b) {
+function split(arr) {
     return new Promise((resolve) => {
         setTimeout(() => {
-            resolve(a / b);
+            resolve(arr[0] / arr[1]);
         }, delay)
     });
 }
@@ -42,19 +42,19 @@ async function countRes() {
     for (let i = 0; i < array.length; i++) {
         switch (array[i]) {
             case '+':
-                const sumRes = await sum(stack.splice(0, 1), stack.splice(0, 1));
+                const sumRes = await sum(stack.splice(0, 2));
                 stack.push(sumRes);
                 break;
             case '-':
-                const subRes = await sub(stack.splice(0, 1), stack.splice(1, 1));
+                const subRes = await sub(stack.splice(0, 2));
                 stack.push(subRes);
                 break;
             case 'x':
-                const multiRes = await multi(stack.splice(0, 1), stack.splice(0, 1));
+                const multiRes = await multi(stack.splice(0, 2));
                 stack.push(multiRes);
                 break;
             case '/':
-                const splitRes = await split(stack.splice(0, 1), stack.splice(1, 1));
+                const splitRes = await split(stack.splice(0, 2));
                 stack.push(splitRes);
                 break;
             default:
