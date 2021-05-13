@@ -1,4 +1,3 @@
-<!--
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +16,7 @@
     function sum(a, b) {
         return new Promise((resolve) => {
             setTimeout(() => {
-                resolve(a + b);
+                resolve(+a + +b);
             }, delay)
         });
     }
@@ -51,19 +50,19 @@
     async function countRes() {
         for (let i = 0; i < array.length; i++) {
             switch (array[i]) {
-                case '+' & stack.length === 2:
-                    const sumRes = await sum(stack.splice(0, 1), stack.splice(1, 1));
+                case '+':
+                    const sumRes = await sum(stack.splice(0, 1), stack.splice(0, 1));
                     stack.push(sumRes);
                     break;
-                case '-' & stack.length === 2:
+                case '-':
                     const subRes = await sub(stack.splice(0, 1), stack.splice(1, 1));
                     stack.push(subRes);
                     break;
-                case 'x' & stack.length === 2:
-                    const multiRes = await multi(stack.splice(0, 1), stack.splice(1, 1));
+                case 'x':
+                    const multiRes = await multi(stack.splice(0, 1), stack.splice(0, 1));
                     stack.push(multiRes);
                     break;
-                case '/' & stack.length === 2:
+                case '/':
                     const splitRes = await split(stack.splice(0, 1), stack.splice(1, 1));
                     stack.push(splitRes);
                     break;
@@ -78,4 +77,4 @@
     countRes().then(v => console.log(v));
 </script>
 </body>
-</html>-->
+</html>
