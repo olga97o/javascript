@@ -6,7 +6,7 @@ const app = express();
 const ACCESS_KEY = "57a22e3912016cc8fc2b123240e068f7";
 
 app.use('/api', createProxyMiddleware({
-    target: `http://api.exchangeratesapi.io/v1/latest?access_key=${ACCESS_KEY}`,
+    target: `http://api.exchangeratesapi.io/v1`,
     changeOrigin: true
 }));
 app.get('/data', async (req, res) => {
