@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gold</title>
+    <style>
+        ul {
+            display: flex;
+            flex-direction: column;
+            max-height: 300px;
+            padding: 2px;
+            flex-wrap: wrap;
+        }
+
+        li {
+            list-style: none;
+            width: fit-content;
+            padding: 2px;
+        }
+
+        .output {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .output > input {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+<form id="main">
+    <label for="base">Choose a base:</label>
+    <select id="base" onchange="baseChange()">
+    </select>
+    <label for="symbols">Choose a symbol/symbols:</label>
+    <ul id="symbols" class="symbols"></ul>
+    <button id="btn" type="submit" onclick="symbolChange(event)">Submit</button>
+</form>
+<br>
+<form id="output" class="output">
+    <label for="chooseBase" id="baseOutput"></label>
+    <input id="chooseBase" type="number"/>
+</form>
+<script>
+    let baseVar;
+    let symbolsVarArr = [];
+    let amountVar;
+    let resultsVar = [];
+
+    function baseChange() {
+        const base = document.getElementById('base');
+        const baseOutput = document.getElementById('baseOutput');
+        baseOutput.innerText = base.value;
+        baseVar = base.value;
+    }
+
+    function symbolChange(event) {
+        event.preventDefault();
+        const output = document.getElementById('output');
+        let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        const valuesSymbols = new Set();
+        checkboxes.forEach(symbol => {
+            symbolsVarArr.push(symbol.value);
+            valuesSymbols.add(symbol.value);
+            symbol.checked = false;
+        })
+        valuesSymbols.forEach(val => {
+            if (valuesSymbols.has(val) === true) {
+                const input = document.createElement('input');
+                const label = document.createElement('label');
+                label.innerText = val;
+                output.append(label);
+                output.append(input);
+            }
+        })
+    }
+
+    const ACCESS_KEY = "57a22e3912016cc8fc2b123240e068f7";
+    const bases = document.getElementById('bases');
+    const symbols = document.getElementById('symbols');
+    fetch(`http://api.exchangeratesapi.io/v1/latest?access_key=${ACCESS_KEY}`)
+        .then(res => {
+            return res.json()
+        })
+        .then(data => {
+            const optionDef = document.createElement('option');
+            optionDef.innerText = ' ';
+            //optionDef.setAttribute('value', '');
+            bases.append(optionDef);
+            //console.log(data.rates);
+            Object.keys(data.rates).forEach(el => {
+                const option = document.createElement('option');
+                const li = document.createElement('li');
+                const input = document.createElement('input');
+                const label = document.createElement('label');
+                input.type = 'checkbox';
+                input.setAttribute('value', `${el}`);
+                label.innerText = el;
+                option.innerText = el;
+                option.setAttribute('value', `${el}`)
+                symbols.append(li);
+                li.append(input);
+                li.append(label);
+                bases.append(option);
+            });
+        })
+    fetch(`http://api.exchangeratesapi.io/v1/latest?access_key=${ACCESS_KEY}&base=${baseVar}&symbols=${symbolsVarArr.join(',')}`)
+        .then(res => {
+            return res.json()
+        })
+        .then(data => {
+            console.log(data);
+        })
+
+</script>
+</body>
+</html>
