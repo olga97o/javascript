@@ -45,6 +45,7 @@
 <script>
     let symbolsVarArr = [];
     let amountVar;
+    let resultsArr = [];
 
     function baseChange() {
         const base = document.getElementById('base');
@@ -85,6 +86,7 @@
                     input.setAttribute('name', 'chooseSymbols');
                     input.setAttribute('title', `${val}`);
                     input.value = data.rates[input.title];
+                    resultsArr.push(input.value);
                     label.setAttribute('for', 'chooseSymbols');
                     label.innerText = val;
                     output.append(label);
@@ -96,10 +98,11 @@
     function amountChange(e) {
         const chooseBase = document.getElementById('chooseBase');
         amountVar = chooseBase.value;
-        const inputs = document.querySelectorAll('input[name="chooseSymbols"]')
+        const inputs = document.querySelectorAll('input[name="chooseSymbols"]');
+        const iterator = resultsArr.values();
         inputs.forEach(val => {
             if (!!amountVar) {
-                val.value *= amountVar;
+                val.value = amountVar * iterator.next().value;
             } else {
                 console.log('Enter base value.')
             }
