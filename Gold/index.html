@@ -50,6 +50,14 @@
         const base = document.getElementById('base');
         const baseOutput = document.getElementById('baseOutput');
         baseOutput.innerText = base.value;
+        const inputs = document.querySelectorAll('input[name="chooseSymbols"]');
+        inputs.forEach(el => {
+            el.remove();
+        })
+        const labels = document.querySelectorAll('label[for="chooseSymbols"]');
+        labels.forEach(el => {
+            el.remove();
+        })
     }
 
     function symbolChange(event) {
@@ -70,18 +78,17 @@
             .then(data => {
                 console.log(data);
                 valuesSymbols.forEach(val => {
-                    if (valuesSymbols.has(val) === true) {
-                        const input = document.createElement('input');
-                        const label = document.createElement('label');
-                        input.setAttribute('type', 'number');
-                        input.setAttribute('min', '0.01');
-                        input.setAttribute('name', 'chooseSymbols');
-                        input.setAttribute('title', `${val}`);
-                        input.value = data.rates[input.title];
-                        label.innerText = val;
-                        output.append(label);
-                        output.append(input);
-                    }
+                    const input = document.createElement('input');
+                    const label = document.createElement('label');
+                    input.setAttribute('type', 'number');
+                    input.setAttribute('min', '0.01');
+                    input.setAttribute('name', 'chooseSymbols');
+                    input.setAttribute('title', `${val}`);
+                    input.value = data.rates[input.title];
+                    label.setAttribute('for', 'chooseSymbols');
+                    label.innerText = val;
+                    output.append(label);
+                    output.append(input);
                 })
             })
     }
