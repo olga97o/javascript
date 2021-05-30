@@ -1,0 +1,13 @@
+{
+  "name": "ES5",
+  "version": "1.0.0",
+  "main": "public/index.js",
+  "scripts": {
+    "build": "babel public/index.js -d bundle && npm run copymy",
+    "copymy": "copyfiles app.js public/*.html bundle"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}
