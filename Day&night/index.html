@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Day&night</title>
+    <style>
+        .black{
+            background: #000;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<form id="output">
+    <label for="username">Username:</label>
+    <input id="username" type="text">
+    <label for="theme">Choose theme:</label>
+    <select id="theme">
+        <option selected value="white">White</option>
+        <option value="black">Black</option>
+    </select>
+    <button onclick="saveData(event)" type="submit">Send</button>
+</form>
+<script src="index.js">
+</script>
+</body>
+</html>
