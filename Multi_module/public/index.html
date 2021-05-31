@@ -31,17 +31,17 @@
 <body>
 <form id="main">
     <label for="base">Choose a base:</label>
-    <select id="base" onchange="baseChange()">
+    <select id="base">
     </select>
     <label for="symbols">Choose a symbol/symbols:</label>
     <ul id="symbols" class="symbols"></ul>
-    <button id="btn" type="submit" onclick="symbolChange(event)">Submit</button>
+    <button id="btn" type="submit">Submit</button>
 </form>
 <br>
 <form id="output" class="output">
     <label for="chooseBase" id="baseOutput">EUR</label>
-    <input value="1" id="chooseBase" type="number" onchange="amountChange(event)"/>
+    <input value="1" id="chooseBase" type="number"/>
 </form>
-<script type="module" src="main.js"></script>
+<script type="module" src="./static/main.js"></script>
 </body>
 </html>

@@ -4,13 +4,13 @@ let chooseBase = document.getElementById('chooseBase');
 
 import * as fetchModule from './fetch.js';
 
-btn.addEventListener('click', event => {
-    import ('./symbolChange.js')
-        .then(module => {
-            //event.preventDefault();
+import ('./symbolChange.js')
+    .then(module => {
+        btn.addEventListener('click', event => {
+            event.preventDefault();
             module.symbolChange(event);
         });
-});
+    });
 
 
 chooseBase.addEventListener('change', () => {

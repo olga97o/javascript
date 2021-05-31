@@ -8,7 +8,7 @@ app.use('/api', createProxyMiddleware({
     changeOrigin: true
 }));
 
-app.use('/', express.static(__dirname + '/public'));
+app.use('/static', express.static(__dirname + '/public'));
 
 app.get('/data', async (req, res) => {
     if (res) {
