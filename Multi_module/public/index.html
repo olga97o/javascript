@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Multi module</title>
+    <style>
+        ul {
+            display: flex;
+            flex-direction: column;
+            max-height: 300px;
+            padding: 2px;
+            flex-wrap: wrap;
+        }
+
+        li {
+            list-style: none;
+            width: fit-content;
+            padding: 2px;
+        }
+
+        .output {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .output > input {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+<form id="main">
+    <label for="base">Choose a base:</label>
+    <select id="base" onchange="baseChange()">
+    </select>
+    <label for="symbols">Choose a symbol/symbols:</label>
+    <ul id="symbols" class="symbols"></ul>
+    <button id="btn" type="submit" onclick="symbolChange(event)">Submit</button>
+</form>
+<br>
+<form id="output" class="output">
+    <label for="chooseBase" id="baseOutput">EUR</label>
+    <input value="1" id="chooseBase" type="number" onchange="amountChange(event)"/>
+</form>
+<script type="module" src="main.js"></script>
+</body>
+</html>
